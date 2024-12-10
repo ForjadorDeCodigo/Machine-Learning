@@ -15,7 +15,7 @@
                 <li><a href="#aplicaciones">Aplicaciones</a></li>
                 <li><a href="#recursos">Recursos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-                <li><a href="#generacion-texto">Generación de Texto</a></li>
+                <li><a href="#clasificacion-sentimientos">Clasificación de Sentimientos</a></li>
             </ul>
         </nav>
     </header>
@@ -54,18 +54,21 @@
         </form>
     </section>
 
-    <section id="generacion-texto">
-        <h2>Generación de Texto</h2>
-        <p>Ingresa un texto inicial y obtén una continuación generada por el modelo.</p>
-        <textarea id="texto-inicial" placeholder="Escribe tu texto inicial aquí..." rows="4" cols="50"></textarea>
-        <button id="boton-generar">Generar Texto</button>
-        <p id="resultado-generacion"></p>
+    <section id="clasificacion-sentimientos">
+        <h2>Clasificación de Sentimientos</h2>
+        <p>Ingresa un texto y obtén una predicción sobre si es positivo, negativo o neutral.</p>
+        <textarea id="texto-clasificacion" placeholder="Escribe tu texto aquí..." rows="4" cols="50"></textarea>
+        <button id="boton-clasificar">Clasificar</button>
+        <p id="resultado-clasificacion"></p>
     </section>
 
     <footer>
         <p>&copy; 2023 El Forjador de Código. Todos los derechos reservados.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
