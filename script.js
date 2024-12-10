@@ -18,7 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Predicciones:', predictions);
 
                 // Revisar todas las categorías de toxicidad
-                const isToxic = predictions[0].results.some(result => result.match);
+                const isToxic = predictions[0].results.some(result => {
+                    console.log(`Categoría: ${result.label}, Probabilidad: ${result.probabilities[1]}, Match: ${result.match}`);
+                    return result.match;
+                });
 
                 // Mostrar el resultado
                 if (isToxic) {
@@ -35,3 +38,4 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('El botón de clasificación no se encontró en el DOM.');
     }
 });
+
