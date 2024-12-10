@@ -38,4 +38,3 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('El botón de clasificación no se encontró en el DOM.');
     }
 });
-
