@@ -1,36 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     const botonClasificar = document.getElementById('boton-clasificar');
     if (botonClasificar) {
-        botonClasificar.addEventListener('click', async () => {
+        botonClasificar.addEventListener('click', () => {
             const texto = document.getElementById('texto-clasificacion').value;
             const resultado = document.getElementById('resultado-clasificacion');
 
             // Limpiar el resultado anterior
             resultado.textContent = '';
 
-            try {
-                // Cargar el modelo de toxicidad
-                const model = await toxicity.load(0.9);
-                console.log('Modelo cargado con éxito');
-
-                // Realizar la predicción
-                const predictions = await model.classify([texto]);
-                console.log('Predicciones:', predictions);
-
-                // Revisar todas las categorías de toxicidad
-                const isToxic = predictions[0].results.some(result => {
-                    console.log(`Categoría: ${result.label}, Probabilidad: ${result.probabilities[1]}, Match: ${result.match}`);
-                    return result.match;
-                });
+            // Utilizar la biblioteca sentiment para la clasificación de texto
+            const sentiment = window.sentiment;
+            if (sentiment) {
+                const analysis = sentiment(texto);
+                const score = analysis.score;
+                const comparative = analysis.comparative;
 
                 // Mostrar el resultado
-                if (isToxic) {
-                    resultado.textContent = 'El texto contiene lenguaje tóxico.';
+                if (score < 0) {
+                    resultado.textContent = 'El texto es negativo.';
+                } else if (score > 0) {
+                    resultado.textContent = 'El texto es positivo.';
                 } else {
-                    resultado.textContent = 'El texto no contiene lenguaje tóxico.';
+                    resultado.textContent = 'El texto es neutral.';
                 }
-            } catch (error) {
-                console.error('Error al cargar el modelo o realizar la predicción:', error);
+
+                console.log('Análisis de sentimiento:', analysis);
+            } else {
+                console.error('La biblioteca sentiment no se ha cargado correctamente.');
                 resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
             }
         });
