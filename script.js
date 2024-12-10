@@ -1,20 +1,17 @@
-// Función para predecir texto (versión de prueba)
-async function predecirTexto(inputTexto) {
-    // Solución temporal: devuelve siempre "prueba"
-    return "prueba";
-}
+document.getElementById('boton-clasificar').addEventListener('click', async () => {
+    const texto = document.getElementById('texto-clasificacion').value;
+    const resultado = document.getElementById('resultado-clasificacion');
 
-// Manejo del botón para predecir
-document.getElementById('predecir-btn').addEventListener('click', async () => {
-    // Obtener el texto ingresado por el usuario
-    const texto = document.getElementById('entrada-texto').value;
+    // Cargar el modelo de toxicidad
+    const model = await toxicity.load(0.5);
 
-    // Obtener la predicción (en este caso, un resultado fijo)
-    const resultado = await predecirTexto(texto);
+    // Realizar la predicción
+    const predictions = await model.classify([texto]);
 
-    // Mostrar el resultado en el párrafo correspondiente
-    document.getElementById('resultado').textContent = `Palabra sugerida: ${resultado}`;
+    // Mostrar el resultado
+    if (predictions[0].results[0].match) {
+        resultado.textContent = 'El texto es negativo.';
+    } else {
+        resultado.textContent = 'El texto es positivo.';
+    }
 });
-
-// Mensaje en la consola para confirmar que el script está cargado
-console.log("script.js cargado correctamente");
