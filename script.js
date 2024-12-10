@@ -1,27 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     const botonClasificar = document.getElementById('boton-clasificar');
     if (botonClasificar) {
-        botonClasificar.addEventListener('click', async () => {
+        botonClasificar.addEventListener('click', () => {
             const texto = document.getElementById('texto-clasificacion').value;
             const resultado = document.getElementById('resultado-clasificacion');
 
             // Limpiar el resultado anterior
             resultado.textContent = '';
 
-            try {
-                // Cargar el modelo de toxicidad
-                const model = await toxicity.load(0.9);
-                console.log('Modelo cargado con éxito');
-
-                // Realizar la predicción
-                const predictions = await model.classify([texto]);
-                console.log('Predicciones:', predictions);
-
-                // Revisar todas las categorías de toxicidad
-                const isToxic = predictions[0].results.some(result => {
-                    console.log(`Categoría: ${result.label}, Probabilidad: ${result.probabilities[1]}, Match: ${result.match}`);
-                    return result.match;
-                });
+            // Utilizar la biblioteca compromise para la clasificación de texto
+            const nlp = window.nlp;
+            if (nlp) {
+                const doc = nlp(texto);
+                const isToxic = doc.has('#Insult') || doc.has('#Profanity');
 
                 // Mostrar el resultado
                 if (isToxic) {
@@ -29,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     resultado.textContent = 'El texto no contiene lenguaje tóxico.';
                 }
-            } catch (error) {
-                console.error('Error al cargar el modelo o realizar la predicción:', error);
+            } else {
+                console.error('La biblioteca compromise no se ha cargado correctamente.');
                 resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
             }
         });
