@@ -1,72 +1,40 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Forjador de Código - Machine Learning</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>El Forjador de Código</h1>
-        <nav>
-            <ul>
-                <li><a href="#introduccion">Introducción</a></li>
-                <li><a href="#aplicaciones">Aplicaciones</a></li>
-                <li><a href="#recursos">Recursos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-                <li><a href="#clasificacion">Clasificación de Texto</a></li>
-            </ul>
-        </nav>
-    </header>
+document.addEventListener('DOMContentLoaded', () => {
+    const botonClasificar = document.getElementById('boton-clasificar');
+    if (botonClasificar) {
+        botonClasificar.addEventListener('click', async () => {
+            const texto = document.getElementById('texto-clasificacion').value;
+            const resultado = document.getElementById('resultado-clasificacion');
 
-    <section id="introduccion">
-        <h2>Introducción al Machine Learning</h2>
-        <p>El Machine Learning es una rama de la inteligencia artificial que se centra en el desarrollo de algoritmos y modelos que permiten a las máquinas aprender a partir de datos.</p>
-    </section>
+            // Limpiar el resultado anterior
+            resultado.textContent = '';
 
-    <section id="aplicaciones">
-        <h2>Aplicaciones del Machine Learning</h2>
-        <p>El Machine Learning tiene aplicaciones en diversas áreas como la medicina, finanzas, reconocimiento de voz, visión por computadora, y más.</p>
-    </section>
+            try {
+                // Cargar el modelo de toxicidad
+                const model = await toxicity.load(0.9);
+                console.log('Modelo cargado con éxito');
 
-    <section id="recursos">
-        <h2>Recursos para Aprender</h2>
-        <p>Aquí tienes algunos recursos para aprender más sobre Machine Learning:</p>
-        <ul>
-            <li><a href="https://www.coursera.org/learn/machine-learning" target="_blank">Curso de Machine Learning en Coursera</a></li>
-            <li><a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a></li>
-            <li><a href="https://scikit-learn.org/" target="_blank">Scikit-learn</a></li>
-        </ul>
-    </section>
+                // Realizar la predicción
+                const predictions = await model.classify([texto]);
+                console.log('Predicciones:', predictions);
 
-    <section id="contacto">
-        <h2>Contacto</h2>
-        <p>Si tienes alguna pregunta o sugerencia, no dudes en contactarme.</p>
-        <form action="#">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="mensaje">Mensaje:</label>
-            <textarea id="mensaje" name="mensaje" required></textarea>
-            <button type="submit">Enviar</button>
-        </form>
-    </section>
+                // Revisar todas las categorías de toxicidad
+                const isToxic = predictions[0].results.some(result => {
+                    console.log(`Categoría: ${result.label}, Probabilidad: ${result.probabilities[1]}, Match: ${result.match}`);
+                    return result.match;
+                });
 
-    <section id="clasificacion">
-        <h2>Clasificación de Texto</h2>
-        <p>Ingresa un texto y obtén una predicción sobre si es positivo o negativo.</p>
-        <textarea id="texto-clasificacion" placeholder="Escribe tu texto aquí..." rows="4" cols="50"></textarea>
-        <button id="boton-clasificar">Clasificar</button>
-        <p id="resultado-clasificacion"></p>
-    </section>
-
-    <footer>
-        <p>&copy; 2023 El Forjador de Código. Todos los derechos reservados.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/compromise@latest"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+                // Mostrar el resultado
+                if (isToxic) {
+                    resultado.textContent = 'El texto contiene lenguaje tóxico.';
+                } else {
+                    resultado.textContent = 'El texto no contiene lenguaje tóxico.';
+                }
+            } catch (error) {
+                console.error('Error al cargar el modelo o realizar la predicción:', error);
+                resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
+            }
+        });
+    } else {
+        console.error('El botón de clasificación no se encontró en el DOM.');
+    }
+});
