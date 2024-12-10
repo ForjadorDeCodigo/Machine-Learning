@@ -1,31 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const botonClasificar = document.getElementById('boton-clasificar');
-    if (botonClasificar) {
-        botonClasificar.addEventListener('click', () => {
-            const texto = document.getElementById('texto-clasificacion').value;
-            const resultado = document.getElementById('resultado-clasificacion');
+    const botonGenerar = document.getElementById('boton-generar');
+    if (botonGenerar) {
+        botonGenerar.addEventListener('click', async () => {
+            const textoInicial = document.getElementById('texto-inicial').value;
+            const resultado = document.getElementById('resultado-generacion');
 
             // Limpiar el resultado anterior
             resultado.textContent = '';
 
-            // Utilizar la biblioteca badwords para la clasificación de texto
-            const Filter = window.Filter;
-            if (Filter) {
-                const filter = new Filter();
-                const isToxic = filter.isProfane(texto);
+            try {
+                // Cargar el modelo de generación de texto
+                const model = await use.load();
+                console.log('Modelo cargado con éxito');
+
+                // Generar texto
+                const generatedText = await model.embed(textoInicial);
+                console.log('Texto generado:', generatedText);
 
                 // Mostrar el resultado
-                if (isToxic) {
-                    resultado.textContent = 'El texto contiene lenguaje tóxico.';
-                } else {
-                    resultado.textContent = 'El texto no contiene lenguaje tóxico.';
-                }
-            } else {
-                console.error('La biblioteca badwords no se ha cargado correctamente.');
+                resultado.textContent = generatedText;
+            } catch (error) {
+                console.error('Error al cargar el modelo o generar el texto:', error);
                 resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
             }
         });
     } else {
-        console.error('El botón de clasificación no se encontró en el DOM.');
+        console.error('El botón de generación no se encontró en el DOM.');
     }
 });
