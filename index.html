@@ -15,6 +15,7 @@
                 <li><a href="#aplicaciones">Aplicaciones</a></li>
                 <li><a href="#recursos">Recursos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#clasificacion">Clasificación de Texto</a></li>
             </ul>
         </nav>
     </header>
@@ -33,6 +34,7 @@
         <h2>Recursos para Aprender</h2>
         <p>Aquí tienes algunos recursos para aprender más sobre Machine Learning:</p>
         <ul>
+            <li><a href="https://www.coursera.org/learn/machine-learning" target="_blank">Curso de Machine Learning en Coursera</a></li>
             <li><a href="https://www.tensorflow.org/" target="_blank">TensorFlow</a></li>
             <li><a href="https://scikit-learn.org/" target="_blank">Scikit-learn</a></li>
         </ul>
@@ -52,8 +54,20 @@
         </form>
     </section>
 
+    <section id="clasificacion">
+        <h2>Clasificación de Texto</h2>
+        <p>Ingresa un texto y obtén una predicción sobre si es positivo o negativo.</p>
+        <textarea id="texto-clasificacion" placeholder="Escribe tu texto aquí..." rows="4" cols="50"></textarea>
+        <button id="boton-clasificar">Clasificar</button>
+        <p id="resultado-clasificacion"></p>
+    </section>
+
     <footer>
-        <p>&copy; 2024 El Forjador de Código. Todos los derechos reservados.</p>
+        <p>&copy; 2023 El Forjador de Código. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity"></script>
+    <script src="script.js"></script>
 </body>
 </html>
