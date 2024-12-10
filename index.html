@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forjador de Código - Machine Learning</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Agregar TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 </head>
-
 <body>
     <header>
         <h1>Forjador de Código</h1>
@@ -17,6 +15,7 @@
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#aplicaciones">Aplicaciones</a></li>
                 <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#demo">Demo</a></li>
             </ul>
         </nav>
     </header>
@@ -44,16 +43,23 @@
             <li><a href="https://scikit-learn.org/" target="_blank">Scikit-Learn</a></li>
         </ul>
     </section>
-    
+
+    <!-- Sección de Demo -->
     <section id="demo">
         <h2>Prueba de Predicción de Texto</h2>
+        <!-- Campo de texto para ingresar una frase -->
         <input type="text" id="entrada-texto" placeholder="Escribe algo aquí...">
+        <!-- Botón para activar la predicción -->
         <button id="predecir-btn">Predecir la siguiente palabra</button>
+        <!-- Elemento para mostrar el resultado -->
         <p id="resultado"></p>
     </section>
+
     <footer>
         <p>Creado por <strong>ForjadorDeCodigo</strong> | © 2024</p>
     </footer>
+
+    <!-- Incluir el script.js al final del cuerpo -->
     <script src="script.js"></script>
 </body>
 </html>
