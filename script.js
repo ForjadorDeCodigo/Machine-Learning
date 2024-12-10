@@ -17,8 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const predictions = await model.classify([texto]);
                 console.log('Predicciones:', predictions);
 
+                // Revisar todas las categorías de toxicidad
+                const isToxic = predictions[0].results.some(result => result.match);
+
                 // Mostrar el resultado
-                if (predictions[0].results[0].match) {
+                if (isToxic) {
                     resultado.textContent = 'El texto contiene lenguaje tóxico.';
                 } else {
                     resultado.textContent = 'El texto no contiene lenguaje tóxico.';
