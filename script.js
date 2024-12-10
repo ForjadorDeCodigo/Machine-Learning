@@ -1,4 +1,4 @@
- document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const botonClasificar = document.getElementById('boton-clasificar');
     if (botonClasificar) {
         botonClasificar.addEventListener('click', () => {
