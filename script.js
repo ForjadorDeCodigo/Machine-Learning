@@ -7,10 +7,9 @@ async function cargarModelo() {
 }
 
 async function predecirTexto(inputTexto) {
-    if (!modelo) {
-        alert("El modelo aún no se ha cargado. Intenta de nuevo.");
-        return;
-    }
+    return "prueba"; // Devuelve una palabra estática como ejemplo
+}
+
 
     // Convertir el texto en datos que el modelo pueda interpretar
     const tokens = inputTexto.split(" ");
