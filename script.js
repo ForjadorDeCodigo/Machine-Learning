@@ -9,14 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
             resultado.textContent = '';
 
             // Utilizar la biblioteca badwords para la clasificación de texto
-            const filter = new window.Filter();
-            const isToxic = filter.isProfane(texto);
+            const Filter = window.Filter;
+            if (Filter) {
+                const filter = new Filter();
+                const isToxic = filter.isProfane(texto);
 
-            // Mostrar el resultado
-            if (isToxic) {
-                resultado.textContent = 'El texto contiene lenguaje tóxico.';
+                // Mostrar el resultado
+                if (isToxic) {
+                    resultado.textContent = 'El texto contiene lenguaje tóxico.';
+                } else {
+                    resultado.textContent = 'El texto no contiene lenguaje tóxico.';
+                }
             } else {
-                resultado.textContent = 'El texto no contiene lenguaje tóxico.';
+                console.error('La biblioteca badwords no se ha cargado correctamente.');
+                resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
             }
         });
     } else {
