@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+ document.addEventListener('DOMContentLoaded', () => {
     const botonClasificar = document.getElementById('boton-clasificar');
     if (botonClasificar) {
         botonClasificar.addEventListener('click', () => {
@@ -8,21 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Limpiar el resultado anterior
             resultado.textContent = '';
 
-            // Utilizar la biblioteca compromise para la clasificación de texto
-            const nlp = window.nlp;
-            if (nlp) {
-                const doc = nlp(texto);
-                const isToxic = doc.has('#Insult') || doc.has('#Profanity');
+            // Utilizar la biblioteca badwords para la clasificación de texto
+            const filter = new window.Filter();
+            const isToxic = filter.isProfane(texto);
 
-                // Mostrar el resultado
-                if (isToxic) {
-                    resultado.textContent = 'El texto contiene lenguaje tóxico.';
-                } else {
-                    resultado.textContent = 'El texto no contiene lenguaje tóxico.';
-                }
+            // Mostrar el resultado
+            if (isToxic) {
+                resultado.textContent = 'El texto contiene lenguaje tóxico.';
             } else {
-                console.error('La biblioteca compromise no se ha cargado correctamente.');
-                resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
+                resultado.textContent = 'El texto no contiene lenguaje tóxico.';
             }
         });
     } else {
