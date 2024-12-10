@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Mostrar el resultado
                 if (predictions[0].results[0].match) {
-                    resultado.textContent = 'El texto es negativo.';
+                    resultado.textContent = 'El texto contiene lenguaje tóxico.';
                 } else {
-                    resultado.textContent = 'El texto es positivo.';
+                    resultado.textContent = 'El texto no contiene lenguaje tóxico.';
                 }
             } catch (error) {
                 console.error('Error al cargar el modelo o realizar la predicción:', error);
