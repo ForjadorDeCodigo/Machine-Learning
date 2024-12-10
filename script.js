@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // Cargar el modelo de toxicidad
-                const model = await toxicity.load(0.5);
+                const model = await toxicity.load(0.9);
                 console.log('Modelo cargado con éxito');
 
                 // Realizar la predicción
@@ -32,4 +32,3 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('El botón de clasificación no se encontró en el DOM.');
     }
 });
-
