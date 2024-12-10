@@ -1,33 +1,20 @@
-// Carga de un modelo preentrenado (por ejemplo, un modelo de texto simple)
-let modelo;
-
-async function cargarModelo() {
-    modelo = await tf.loadLayersModel('https://example.com/modelo/model.json'); // Usa un enlace al modelo preentrenado
-    console.log("Modelo cargado correctamente");
-}
-
+// Función para predecir texto (versión de prueba)
 async function predecirTexto(inputTexto) {
-    return "prueba"; // Devuelve una palabra estática como ejemplo
-}
-
-
-    // Convertir el texto en datos que el modelo pueda interpretar
-    const tokens = inputTexto.split(" ");
-    const tensor = tf.tensor([tokens.map(t => t.length % 10)]); // Solo un ejemplo simple de tokenización
-
-    // Obtener la predicción
-    const prediccion = modelo.predict(tensor);
-    const palabraSugerida = prediccion.argMax(-1).dataSync()[0]; // Ejemplo de índice de predicción
-
-    return palabraSugerida; // Aquí podrías convertirlo a una palabra real
+    // Solución temporal: devuelve siempre "prueba"
+    return "prueba";
 }
 
 // Manejo del botón para predecir
 document.getElementById('predecir-btn').addEventListener('click', async () => {
+    // Obtener el texto ingresado por el usuario
     const texto = document.getElementById('entrada-texto').value;
+
+    // Obtener la predicción (en este caso, un resultado fijo)
     const resultado = await predecirTexto(texto);
+
+    // Mostrar el resultado en el párrafo correspondiente
     document.getElementById('resultado').textContent = `Palabra sugerida: ${resultado}`;
 });
 
-// Cargar el modelo al abrir la página
-cargarModelo();
+// Mensaje en la consola para confirmar que el script está cargado
+console.log("script.js cargado correctamente");
