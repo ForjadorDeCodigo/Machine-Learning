@@ -1,36 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const botonClasificar = document.getElementById('boton-clasificar');
-    if (botonClasificar) {
-        botonClasificar.addEventListener('click', () => {
-            const texto = document.getElementById('texto-clasificacion').value;
-            const resultado = document.getElementById('resultado-clasificacion');
+    const botonPrediccion = document.getElementById('boton-prediccion');
+    const resultado = document.getElementById('resultado-prediccion');
 
-            // Limpiar el resultado anterior
-            resultado.textContent = '';
+    async function entrenarModelo() {
+        const model = tf.sequential();
+        model.add(tf.layers.dense({units: 1, inputShape: [1]}));
+        model.compile({optimizer: 'sgd', loss: 'meanSquaredError'});
 
-            // Utilizar la biblioteca sentiment para la clasificación de texto
-            const sentiment = window.sentiment;
-            if (sentiment) {
-                const analysis = sentiment(texto);
-                const score = analysis.score;
-                const comparative = analysis.comparative;
+        // Datos de entrenamiento
+        const xs = tf.tensor2d([1, 2, 3, 4], [4, 1]); // Entradas
+        const ys = tf.tensor2d([2, 4, 6, 8], [4, 1]); // Salidas esperadas
 
-                // Mostrar el resultado
-                if (score < 0) {
-                    resultado.textContent = 'El texto es negativo.';
-                } else if (score > 0) {
-                    resultado.textContent = 'El texto es positivo.';
-                } else {
-                    resultado.textContent = 'El texto es neutral.';
-                }
-
-                console.log('Análisis de sentimiento:', analysis);
-            } else {
-                console.error('La biblioteca sentiment no se ha cargado correctamente.');
-                resultado.textContent = 'Ocurrió un error al procesar el texto. Por favor, inténtalo de nuevo.';
-            }
-        });
-    } else {
-        console.error('El botón de clasificación no se encontró en el DOM.');
+        await model.fit(xs, ys, {epochs: 500});
+        return model;
     }
+
+    botonPrediccion.addEventListener('click', async () => {
+        const input = document.getElementById('input-secuencia').value;
+        const numeros = input.split(',').map(n => parseFloat(n.trim()));
+
+        if (numeros.some(isNaN) || numeros.length < 1) {
+            resultado.textContent = 'Por favor, ingresa una secuencia válida de números.';
+            return;
+        }
+
+        const modelo = await entrenarModelo();
+        const siguiente = numeros[numeros.length - 1] + 1; // Supone que el siguiente es consecutivo
+        const prediccion = modelo.predict(tf.tensor2d([siguiente], [1, 1]));
+        const valorPredicho = prediccion.dataSync()[0];
+
+        resultado.textContent = `El siguiente número podría ser aproximadamente: ${valorPredicho.toFixed(2)}`;
+    });
 });
