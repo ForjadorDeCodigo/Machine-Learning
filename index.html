@@ -15,7 +15,7 @@
                 <li><a href="#aplicaciones">Aplicaciones</a></li>
                 <li><a href="#recursos">Recursos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-                <li><a href="#clasificacion-sentimientos">Clasificación de Sentimientos</a></li>
+                <li><a href="#prediccion-secuencias">Predicción de Secuencias</a></li>
             </ul>
         </nav>
     </header>
@@ -54,20 +54,21 @@
         </form>
     </section>
 
-    <section id="clasificacion-sentimientos">
-        <h2>Clasificación de Sentimientos</h2>
-        <p>Ingresa un texto y obtén una predicción sobre si es positivo, negativo o neutral.</p>
-        <textarea id="texto-clasificacion" placeholder="Escribe tu texto aquí..." rows="4" cols="50"></textarea>
-        <button id="boton-clasificar">Clasificar</button>
-        <p id="resultado-clasificacion"></p>
+    <section id="prediccion-secuencias">
+        <h2>Predicción de Secuencias Numéricas</h2>
+        <p>Ingresa una secuencia de números separados por comas (por ejemplo, "1, 2, 3") y el modelo predecirá el siguiente número.</p>
+        <textarea id="input-secuencia" placeholder="Escribe tu secuencia aquí..." rows="2" cols="50"></textarea>
+        <button id="boton-prediccion">Predecir</button>
+        <p id="resultado-prediccion"></p>
     </section>
 
     <footer>
         <p>&copy; 2023 El Forjador de Código. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/sentiment@5.0.2/dist/sentiment.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.7.0"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
 
