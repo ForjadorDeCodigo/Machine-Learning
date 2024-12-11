@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
             resultado.textContent = '';
 
             // Utilizar la biblioteca sentiment para la clasificación de texto
-            if (typeof sentiment !== 'undefined') {
+            const sentiment = window.sentiment;
+            if (sentiment) {
                 const analysis = sentiment(texto);
                 const score = analysis.score;
                 const comparative = analysis.comparative;
